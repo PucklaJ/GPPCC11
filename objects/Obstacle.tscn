@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://textures/obstacle.png" type="Texture" id=1]
+[ext_resource path="res://textures/obstacle2.png" type="Texture" id=2]
+[ext_resource path="res://textures/obstacle1.png" type="Texture" id=3]
+
+[node name="Obstacle" type="Node2D"]
+
+[node name="Obstacle1" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Obstacle2" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Obstacle3" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false

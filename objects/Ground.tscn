@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://textures/ground.png" type="Texture" id=1]
+[ext_resource path="res://textures/ground1.png" type="Texture" id=2]
+[ext_resource path="res://textures/ground2.png" type="Texture" id=3]
+
+[node name="Ground" type="Node2D"]
+
+[node name="Sprites" type="Node" parent="."]
+
+[node name="Ground1" type="Sprite" parent="Sprites"]
+visible = false
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Ground2" type="Sprite" parent="Sprites"]
+visible = false
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Ground3" type="Sprite" parent="Sprites"]
+visible = false
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Ground" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false

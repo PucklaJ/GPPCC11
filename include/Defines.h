@@ -1,0 +1,229 @@
+#ifndef DEFINES_H
+#define DEFINES_H
+
+#define RIGHT_KEY 0
+#define LEFT_KEY 1
+#define JUMP_KEY 2
+#define SWORD_KEY 3
+#define BOW_KEY 4
+#define UP_KEY 5
+#define DOWN_KEY 6
+#define BUTTON_SIZE 7
+
+#define GAME_MENU_STATE 1
+#define GAME_BOSS_GROUND_STATE 2
+#define GAME_BOSS_FALL_STATE 3
+#define GAME_BOSS_DESTROY_GROUND_STATE 4
+#define GAME_GROUND_FALL_TRANSITION_STATE 5
+#define GAME_FALL_INTRO_STATE 6
+#define GAME_FALL_GROUND_TRANSITION_STATE 7
+#define GAME_GROUND_INTRO_STATE 8
+#define GAME_GAME_OVER_STATE 9
+#define GAME_INTRO_STATE 11
+#define GAME_GROUND_WIN_STATE 12
+#define GAME_FALL_WIN_TRANSITION_STATE 13
+#define GAME_GROUND_WIN_INTRO_STATE 14
+#define GAME_WIN_STATE 15
+
+#define GAME_GROUND_FALL_TRANSITION_OVERLAP 100.0f
+#define GAME_NUM_BACKGROUNDS 0
+#define GAME_SCALE 4.0f
+#define GAME_INTRO_TIME 5.0f
+
+#define GROUND_DESTROY_PARTS_X 30
+#define GROUND_DESTROY_PARTS_Y 5
+
+#define PLAYER_VELOCITY 300.0f
+#define PLAYER_DAMPING_DIVIDER 15.0f
+#define PLAYER_ACCELARATION 30.0f
+#define PLAYER_VELOCITY_AIR_DIVIDER 3.0f
+#define PLAYER_WIDTH 80
+#define PLAYER_HEIGHT 100
+#define PLAYER_JUMP_POWER 650.0f
+#define PLAYER_KNOCKBACK_TIME 1.0f
+#define PLAYER_KNOCKBACK_POWER 400.0f
+#define PLAYER_SWORD_ATTACK_TIME 0.5f
+#define PLAYER_SWORD_ATTACK_VELOCITY_DIVIDER 3.0f
+#define PLAYER_BOW_ATTACK_VELOCITY_DIVIDER 4.0f
+#define PLAYER_SWORD_DAMAGE 1.0f
+#define PLAYER_BOW_DAMAGE 0.5f
+#define PLAYER_Y_BORDER 500.0f
+#define PLAYER_FALL_INTRO_Y_POS -300.0f
+#define PLAYER_FALL_INTRO_Y_END_POS 200.0f
+#define PLAYER_HEALTH 10.0f
+#define PLAYER_DEPTH 0
+#define PLAYER_MAX_ARROWS 3
+#define PLAYER_BOW_PREPARE_TIME 0.5f
+#define PLAYER_BOW_SHOOT_TIME 0.5f
+#define PLAYER_FALL_GROUND_TRANSITION_END_Y_POS (m_mainClass->getNativeRes().height + 100.0f)
+#define PLAYER_GROUND_INTRO_START_Y_POS -300.0f
+#define PLAYER_ARROW_PICKUP_AMOUNT 1
+#define PLAYER_INTRO_Y_POS -200.0f
+
+#define PLAYER_HITBOX_WIDTH 40.0f
+#define PLAYER_HITBOX_HEIGHT 30.0f
+#define PLAYER_HITBOX_X_POS 0.0f
+#define PLAYER_HITBOX_Y_POS 60.0f
+
+#define PLAYER_MOVE_STATE 1
+#define PLAYER_SWORD_ATTACK_STATE 2
+#define PLAYER_BOW_ATTACK_STATE 3
+#define PLAYER_KNOCKBACK_STATE 4
+#define PLAYER_BOW_PREPARE_STATE 5
+#define PLAYER_INTRO_STATE 6
+
+
+#define GROUND_WIDTH m_mainClass->getNativeRes().x
+#define GROUND_HEIGHT 80.0f
+#define GROUND_POS_X 0.0f
+#define _GROUND_POS_Y_(init) (!init ? BossfightScreen::mainBossfightScreen->getGround()->getPosition().y : (m_mainClass->getNativeRes().y - GROUND_HEIGHT)) 
+#define GROUND_POS_Y _GROUND_POS_Y_(false) 
+#define GROUND_DEPTH 0
+
+#define ODIN_WIDTH  200.0f
+#define ODIN_HEIGHT 300.0f
+#define ODIN_VELOCITY 100.0f
+#define ODIN_WAIT_FOR_WALK_TIME (Game::phase == 1 ? 1.2f : (Game::phase == 2 ? 1.0f : 0.75f))
+#define ODIN_WALK_TIME_TO_THROW (Game::phase == 1 ? 3.5f : (Game::phase == 2 ? 2.75f : 2.0f))
+#define ODIN_WAIT_FOR_SECOND_SPEER_TIME (Game::phase == 1 ? 0.75f : (Game::phase == 2 ? 0.5f : 0.3f))
+#define ODIN_WAIT_FOR_WALK_SPEER_TIME (Game::phase == 1 ? 0.6f : (Game::phase == 2 ? 0.4f : 0.3f))
+#define ODIN_DIRECTION_RIGHT 1
+#define ODIN_DIRECTION_LEFT 0
+#define ODIN_DIRECTION_UP 2
+#define ODIN_DIRECTION_DOWN 3
+#define ODIN_DIRECTION_STAND 4
+#define ODIN_HIT_ON_GROUND_DISTANCE 330.0f
+#define ODIN_WAIT_FOR_HIT_ON_GROUND_TIME (Game::phase == 1 ? 0.6f : (Game::phase == 2 ? 0.4f : 0.3f))
+#define ODIN_HIT_ON_GROUND_TIME 0.6f
+#define ODIN_WAIT_FOR_WALK_HIT_ON_GROUND_TIME (Game::phase == 1 ? 1.1f : (Game::phase == 2 ? 1.0f : 0.9f))
+#define ODIN_SPEER_THROW_VELOCITY (Game::phase == 1 ? 900.0f : (Game::phase == 2 ? 1000.0f : 1100.0f))
+#define ODIN_HIT_ON_GROUND_HIT_BOX_WIDTH 200.0f
+#define ODIN_HIT_ON_GROUND_HIT_BOX_HEIGHT 90.0f
+#define ODIN_HIT_ON_GROUND_HIT_BOX_X_POS 0.0f
+#define ODIN_HIT_ON_GROUND_HIT_BOX_Y_POS ODIN_HEIGHT
+#define ODIN_GROUND_HEALTH 4.0f
+#define ODIN_FALL_HEALTH 3.0f
+#define ODIN_KNOCKBACK_TIME (Game::phase == 1 ? 2.3f : (Game::phase == 2 ? 1.9f : 1.6f))
+#define ODIN_KNOCKBACK_EXPLOSION_TIME (Game::phase == 1 ? 0.6f : (Game::phase == 2 ? 0.4f : 0.3f))
+#define ODIN_KNOCKBACK_EXPLOSION_DISTANCE (Game::phase == 1 ? 480.0f : (Game::phase == 2 ? 510.0f : 600.0f))
+#define ODIN_KNOCKBACK_EXPLOSION_AMPLIFIER (Game::phase == 1 ? 4.0f : (Game::phase == 2 ? 4.5f : 5.0f))
+#define ODIN_DESTROY_GROUND_JUMP_UP_TIME 0.25f
+#define ODIN_DESTROY_GROUND_JUMP_DOWN_TIME 0.5f
+#define ODIN_FALL_INTRO_Y_POS -500.0f
+#define ODIN_FALL_Y_END_POS 200.0f
+#define ODIN_FALL_WALK_X_POS (m_mainClass->getNativeRes().width - 300.0f)
+#define ODIN_THROW_LIGHTNING_TIME (Game::phase == 1 ? 10.0f : 6.0f)
+#define ODIN_LIGHTNING_THROW_Y_POS_1 (m_mainClass->getNativeRes().height / 4.0f)
+#define ODIN_LIGHTNING_THROW_Y_POS_2 (m_mainClass->getNativeRes().height / 4.0f * 3.0f)
+#define ODIN_LIGHTNING_THROW_POS_PADDING 5.0f
+#define ODIN_IS_IN_LIGHTNING_POS_1 ((getPosition().y + getActualSize().height/2.0f >= ODIN_LIGHTNING_THROW_Y_POS_1 - ODIN_LIGHTNING_THROW_POS_PADDING && getPosition().y + getActualSize().height/2.0f < ODIN_LIGHTNING_THROW_Y_POS_1 + ODIN_LIGHTNING_THROW_POS_PADDING))
+#define ODIN_IS_IN_LIGHTNING_POS_2 ((getPosition().y + getActualSize().height/2.0f >= ODIN_LIGHTNING_THROW_Y_POS_2 - ODIN_LIGHTNING_THROW_POS_PADDING && getPosition().y + getActualSize().height/2.0f < ODIN_LIGHTNING_THROW_Y_POS_2 + ODIN_LIGHTNING_THROW_POS_PADDING))
+#define ODIN_CAN_THROW_LIGHTNING ((m_previousLightningPos != ODIN_DIRECTION_UP && ODIN_IS_IN_LIGHTNING_POS_1) || (m_previousLightningPos != ODIN_DIRECTION_DOWN && ODIN_IS_IN_LIGHTNING_POS_2))
+#define ODIN_SPEER_DAMAGE 0.5f
+#define ODIN_HIT_DAMAGE 1.0f
+#define ODIN_LIGHTNING_DAMAGE 0.5f
+#define ODIN_LIGHTNING_SMALL_DAMAGE 1.5f
+#define ODIN_TOUCH_DAMAGE 0.5f
+#define ODIN_DEPTH 0
+#define ODIN_FALL_GROUND_TRANSITION_END_Y_POS (m_mainClass->getNativeRes().height + 100.0f)
+#define ODIN_GROUND_INTRO_START_Y_POS -500.0f
+#define ODIN_TELEPORT_Y_POS (-ODIN_HEIGHT - 300.0f)
+#define ODIN_TELEPORT_WAIT_TIME 0.5f
+#define ODIN_TELEPORT_MOVE_TIME 2.5f
+#define ODIN_NUM_THROW_SPEERS (Game::phase == 1 ? 2 : (Game::phase == 2 ? 3 : 4)) 
+#define ODIN_WAIT_FOR_GRAB_NEW_SPEER_TIME (Game::phase == 1 ? 0.5f : (Game::phase == 2 ? 0.35f : 0.25f))
+#define ODIN_WAIT_FOR_LIGHTNING_THROW_TIME (Game::phase == 1 ? 1.0f : (Game::phase == 2 ? 0.75f : 0.6f))
+
+#define ODIN_WALK_STATE 1
+#define ODIN_WAIT_FOR_WALK_STATE 2
+#define ODIN_WAIT_FOR_SECOND_SPEER_STATE 3
+#define ODIN_WAIT_FOR_WALK_SPEER_STATE 4
+#define ODIN_WAIT_FOR_HIT_ON_GROUND_STATE 5
+#define ODIN_HIT_ON_GROUND_STATE 6
+#define ODIN_WAIT_FOR_WALK_HIT_ON_GROUND_STATE 7
+#define ODIN_KNOCKBACK_STATE 8
+#define ODIN_AWAKE_FROM_KNOCKBACK_STATE 9
+#define ODIN_KNOCKBACK_EXPLOSION_STATE 10
+#define ODIN_DESTROY_GROUND_STATE_JUMP_UP 11
+#define ODIN_DESTROY_GROUND_STATE_JUMP_DOWN 12
+#define ODIN_DESTROY_GROUND_STATE 13
+#define ODIN_TELEPORT_WAIT_STATE 14
+#define ODIN_TELEPORT_ATTACK_STATE 15
+#define ODIN_INTRO_STATE 16
+#define ODIN_FALL_GAME_OVER_STATE 17
+#define ODIN_GROUND_GAME_OVER_STATE 18
+#define ODIN_WAIT_FOR_WALK_GAME_OVER_STATE 19
+#define ODIN_WAIT_FOR_GRAB_NEW_SPEER_STATE 20
+#define ODIN_WAIT_FOR_LIGHTNING_THROW_STATE 21
+
+#define SPEER_WIDTH 100.0f
+#define SPEER_HEIGHT 5.0f
+#define SPEER_X_POS_DISAPPEAR 200.0f
+#define SPEER_Y_POS_DISAPPEAR 200.0f
+#define SPEER_DEPTH -100
+
+#define LIGHTNING_VELOCITY (Game::phase == 1 ? 500.0f : (Game::phase == 2 ? 600.0f : 700.0f))
+#define LIGHTNING_WIDTH 172.0f
+#define LIGHTNING_HEIGHT 29.0f
+#define LIGHTNING_GET_BIG_X_POS (m_mainClass->getNativeRes().width / 4.0f - LIGHTNING_WIDTH/2.0f)
+#define LIGHTNING_BIG_WIDTH (m_mainClass->getNativeRes().width / 2.0f)
+#define LIGHTNING_BIG_HEIGHT (m_mainClass->getNativeRes().height / 2.0f)
+#define LIGHTNING_BE_BIG_TIME (Game::phase == 1 ? 1.0f : (Game::phase == 2 ? 1.5f : 2.0f))
+#define LIGHTNING_DEPTH SPEER_DEPTH
+
+#define OBSTACLE_DAMAGE 0.5f
+#define OBSTACLE_WIDTH 100.0f
+#define OBSTACLE_HEIGHT 100.0f
+#define OBSTACLE_MIN_X (OBSTACLE_WIDTH + 50.0f)
+#define OBSTACLE_MAX_X (ODIN_FALL_WALK_X_POS - OBSTACLE_WIDTH - 20.0f)
+#define OBSTACLE_DEPTH (PLAYER_DEPTH+100)
+#define OBSTACLE_Y_START_POS (m_mainClass->getNativeRes().height+100.0f)
+#define OBSTACLE_Y_END_POS (-OBSTACLE_HEIGHT-100.0f)
+#define MAX_OBSTACLES (Game::phase == 1 ? 3 : 5)
+#define OBSTACLE_MIN_SPAWN_TIME (Game::phase == 1 ? 0.75f : (Game::phase == 2 ? 0.6f : 0.5f))
+#define OBSTACLE_MAX_SPAWN_TIME (Game::phase == 1 ? 3.0f : (Game::phase == 2 ? 2.8f : 2.5f))
+#define OBSTACLE_MOVE_TIME (Game::phase == 1 ? 3.0f : 2.0f)
+
+#define RAND_PRECISION 1000.0f
+
+#define ARROW_WIDTH 50.0f
+#define ARROW_HEIGHT 5.0f
+#define ARROW_VELOCITY 700.0f
+#define ARROW_DAMAGE 0.5f
+#define ARROW_DEPTH SPEER_DEPTH
+
+#define ARROW_PICKUP_MIN_SPAWN_TIME 8.0f
+#define ARROW_PICKUP_MAX_SPAWN_TIME 20.0f
+#define ARROW_PICKUP_GROUND_MOVE_TIME 5.0f
+#define ARROW_PICKUP_FALL_MOVE_TIME OBSTACLE_MOVE_TIME
+#define ARROW_PICKUP_WIDTH 40.0f
+#define ARROW_PICKUP_HEIGHT 40.0f
+#define ARROW_PICKUP_GROUND_MIN_X 40.0f
+#define ARROW_PICKUP_GROUND_MAX_X (m_mainClass->getNativeRes().width-ARROW_PICKUP_WIDTH-40.0f)
+#define ARROW_PICKUP_FALL_MIN_X 40.0f
+#define ARROW_PICKUP_FALL_MAX_X (ODIN_FALL_WALK_X_POS - ARROW_PICKUP_WIDTH - 40.0f)
+#define ARROW_PICKUP_GROUND_SPAWN_Y_POS -100.0f
+#define ARROW_PICKUP_FALL_SPAWN_Y_POS (m_mainClass->getNativeRes().height + 100.0f)
+#define ARROW_PICKUP_LAY_TIME 3.0f
+#define ARROW_PICKUP_BLINK_TIME 2.0f
+#define ARROW_PICKUP_DEPTH SPEER_DEPTH
+#define ARROW_PICKUP_FALL_Y_END_POS (-OBSTACLE_HEIGHT-100.0f)
+#define ARROW_PICKUP_MAX 2
+
+#define BACKGROUND_SCROLL_VELOCITY ((OBSTACLE_Y_START_POS-OBSTACLE_Y_END_POS)/OBSTACLE_MOVE_TIME)
+#define BACKGROUND_DEPTH 10000
+#define BACKGROUND_X_POS (m_mainClass->getNativeRes().width / 8.0f)
+
+#define HEALTH_BAR_LEFT true
+#define HEALTH_BAR_RIGHT false
+#define HEALTH_BAR_PADDING 5.0f
+#define HEALTH_BAR_HEART_WIDTH 50.0f
+#define HEALTH_BAR_HEART_HEIGHT 50.0f
+#define HEALTH_BAR_HEART_HALF_WIDTH 30.0f
+#define HEALTH_BAR_HEART_HALF_HEIGHT 50.0f
+
+#define HUD_DEPTH -10000
+
+#define DEFAULT_VOLUME 0.2f
+
+#endif

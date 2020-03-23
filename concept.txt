@@ -1,0 +1,86 @@
+Konzept für meine Teilnahme an der GPPCC11
+
+Setting: Wikingersetting
+Was: Man ist in einem Bossfight gegen Odin. Man kämpft zuerst am Boden. Dann zerbticht Odin
+     den Boden und man fällt hinunter. Der Bossfight geht weiter. Während dem hinunter fallen
+     kann man Odin entweder mit seinem Schwert/Axt oder seinem Bogen verletzen. Man kann PowerUps
+     einsammeln, die dir spezielle Angriffe oder mehr Leben geben. Nach einer bestimmten Zeit landet man wieder
+     am Boden und kämpft weiter. Danach wird wieder der Boden zerstört und man fällt wieder und der Bossfight geht in die
+     zweite Phase über. usw.
+     
+Wer: Man spielt einen Wikinger, der Odin besiegen will
+
+Wo:  Auf einem Ast des Weltenbaum (Yggdrasil). Der Spieler und Odin fallen durch die Äste. Vielleicht wenns sich ausgeht baue ich ein, dass sie durch
+     die verschiedenen Welten fallen.
+     
+PowerUps: Werden als Runen dargestellt 
+     + Mehr Leben
+     + Sehr starker Bogen
+     + Sehr starkes Schwert
+     + Pfeilhagel
+     + Einfrieren
+     
+     
+Kampf am Boden: Der Spieler kann sich nach links und rechts bewegen und springen. Er kann mit seinem Schwert angreifen oder mit seinem Bogen
+                Der Spieler hat nur eine bestimmte Anzahl an Pfeilen, die nur eingesammelt werden können, während dem hinunter fallen.
+                Odin kann mit einer Axt auf den Boden schlagen und seinen Speer werfen.
+                Es fallen PowerUps vom Himmel, welche eine der oben genannten sein kann.
+                Nachdem Odin eine bestimmte Anzahl an Leben verloren hat, schlägt er auf den Boden und er bricht ein und der Kampf geht über
+                in das Fallen.
+                Odinmovement:
+                    Odin geht nach vor und schlägt. Odin geht zurück und schlägt. Odin wirft zwei Speere. usw.
+                
+Kampf während dem Fallen: Der Spieler kann sich nach links, rechts, oben und unten bewegen und kann mit seinem Schwert oder mit seinem Bogen angreifen
+                          Odin wirft den Spieler mit seinem Speer ab oder verschießt Blitze. Der Spieler muss auch verschidenen Ästen des 
+                          Weltenbaums ausweichen.
+                          Blitze:
+                                Werden geworfen und bleiben liegen. Nach einer bestimmten Zeit werden sie aktiviert und machen dem Spieler Schaden, 
+                                wenn er darin steht.
+                          Odinmovement:
+                                Odin geht immer von oben nach unten und von unten nach oben und wirft währenddessen nach zufälligen Abständen Speere.
+                                Manchmal ist ein Blitz dabei.
+                                
+Wenn Odin den Spieler berührt bekommt der Spieler Schaden.
+
+Verschiedene Screens:
+            + Hauptmenu
+            + Bossfight
+            + Winscreen
+            + Defeatscreen
+                          
+
+Dinge zu Zeichnen:
+             + Spieler
+                - Charakter
+                - Gehanimationen
+                - Springanimation
+                - Schlaganimation auf dem Boden
+                - Bogenschießanimation auf dem Boden
+                - Getroffenwerdenanimation (Schlag, Speer, Boden)
+                - Runterfallanimation
+                - Schlaganimation im Fallen
+                - Bogenschießanimation im Fallen
+                - Getroffenwerdenanimation (Speer, Blitz, Fallen)
+                - Siegesanimation
+            + Odin
+                - Charakter
+                - Laufanimation
+                - Speerwerfanimation
+                - Schlaganimation
+                - Getroffenwerdenanimation
+                - Bodenzerstöranimation
+                - Fallanimation
+                - Speerwerfanimation (Fallen)
+                - Blitzschießanimation
+                - Getroffenwerdenanimation (Fallen)
+                - Todesanimation
+            + Ort
+                - Ast des Weltenbaumes
+                - Äste zum ausweichen
+                - Hintergrund
+            + Objekte
+                - Pfeil der fliegt
+                - Speer der fliegt
+                - Blitz der fliegt
+                - PowerUps
+                

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/groundDestruction4.ogg-984c32fc54a931104891c6e5fa769258.oggstr"
+
+[deps]
+
+source_file="res://sounds/groundDestruction4.ogg"
+dest_files=[ "res://.import/groundDestruction4.ogg-984c32fc54a931104891c6e5fa769258.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

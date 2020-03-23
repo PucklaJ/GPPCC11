@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://textures/lightning.png" type="Texture" id=1]
+[ext_resource path="res://textures/lightning_big2.png" type="Texture" id=2]
+[ext_resource path="res://textures/lightning1.png" type="Texture" id=3]
+[ext_resource path="res://textures/lightning2.png" type="Texture" id=4]
+[ext_resource path="res://textures/lightning_big1.png" type="Texture" id=5]
+[ext_resource path="res://textures/lightning_big.png" type="Texture" id=6]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Big"
+length = 0.15
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 2 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Small"
+length = 0.15
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 4 ) ]
+}
+
+[node name="Lightning" type="Sprite"]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Big = SubResource( 1 )
+anims/Small = SubResource( 2 )

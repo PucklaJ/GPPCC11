@@ -1,7 +1,11 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://textures/player_sheet.png" type="Texture" id=1]
 [ext_resource path="res://objects/Bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Player.gd" type="Script" id=3]
+
+[sub_resource type="CapsuleShape2D" id=15]
+height = 5.0
 
 [sub_resource type="Animation" id=1]
 resource_name = "Bow"
@@ -230,13 +234,21 @@ tracks/0/keys = {
 "values": [ Rect2( 40, 50, 38, 25 ), Rect2( 78, 50, 38, 25 ), Rect2( 116, 50, 38, 25 ) ]
 }
 
-[node name="Player" type="Sprite"]
+[node name="Player" type="KinematicBody2D"]
+collision/safe_margin = 0.1
+script = ExtResource( 3 )
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 10, 13 )
+shape = SubResource( 15 )
+
+[node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 20, 25 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 anims/Bow = SubResource( 1 )
 anims/BowFinish = SubResource( 2 )
 anims/FallDown = SubResource( 3 )
@@ -252,10 +264,10 @@ anims/Stand = SubResource( 12 )
 anims/SwordFall = SubResource( 13 )
 anims/SwordGround = SubResource( 14 )
 
-[node name="Lock" type="Node" parent="."]
+[node name="Lock" type="Node" parent="Sprite"]
 
-[node name="HealthBar" parent="Lock" instance=ExtResource( 2 )]
+[node name="HealthBar" parent="Sprite/Lock" instance=ExtResource( 2 )]
 
-[node name="ArrowBar" parent="Lock" instance=ExtResource( 2 )]
+[node name="ArrowBar" parent="Sprite/Lock" instance=ExtResource( 2 )]
 position = Vector2( 0, 13 )
 SPRITE_NAME = "Arrow"

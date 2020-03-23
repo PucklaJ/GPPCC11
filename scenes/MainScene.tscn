@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/MainScene.gd" type="Script" id=1]
 [ext_resource path="res://objects/Ground.tscn" type="PackedScene" id=2]
@@ -6,6 +6,17 @@
 [ext_resource path="res://objects/Odin.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/Tree.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/Cam.gd" type="Script" id=6]
+
+[sub_resource type="LineShape2D" id=1]
+normal = Vector2( 0, 1 )
+
+[sub_resource type="LineShape2D" id=2]
+normal = Vector2( 1, 0 )
+
+[sub_resource type="LineShape2D" id=3]
+normal = Vector2( -1, 0 )
+
+[sub_resource type="LineShape2D" id=4]
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 1 )
@@ -26,3 +37,22 @@ anchor_mode = 0
 current = true
 zoom = Vector2( 0.25, 0.25 )
 script = ExtResource( 6 )
+
+[node name="Border" type="Node2D" parent="."]
+
+[node name="Border1" type="StaticBody2D" parent="Border"]
+
+[node name="Shape" type="CollisionShape2D" parent="Border/Border1"]
+shape = SubResource( 1 )
+
+[node name="Shape2" type="CollisionShape2D" parent="Border/Border1"]
+shape = SubResource( 2 )
+
+[node name="Border2" type="StaticBody2D" parent="Border"]
+position = Vector2( 320, 180 )
+
+[node name="Shape4" type="CollisionShape2D" parent="Border/Border2"]
+shape = SubResource( 3 )
+
+[node name="Shape3" type="CollisionShape2D" parent="Border/Border2"]
+shape = SubResource( 4 )

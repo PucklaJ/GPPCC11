@@ -19,6 +19,10 @@ config/name="Battle of Yggdrasil"
 run/main_scene="res://scenes/MainScene.tscn"
 config/icon="res://textures/heart.png"
 
+[autoload]
+
+Globals="*res://src/globals.gd"
+
 [display]
 
 window/size/width=1280

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://textures/Odin.png" type="Texture" id=1]
 [ext_resource path="res://textures/Odin1.png" type="Texture" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://textures/Odin21.png" type="Texture" id=22]
 [ext_resource path="res://textures/Odin23.png" type="Texture" id=23]
 [ext_resource path="res://textures/Odin24.png" type="Texture" id=24]
+[ext_resource path="res://objects/Bar.tscn" type="PackedScene" id=25]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fall"
@@ -286,3 +287,11 @@ anims/SpeerThrowGround = SubResource( 12 )
 anims/SpeerWaitFall = SubResource( 13 )
 anims/SpeerWaitGround = SubResource( 14 )
 anims/Stand = SubResource( 15 )
+
+[node name="Lock" type="Node" parent="."]
+
+[node name="HealthBar" parent="Lock" instance=ExtResource( 25 )]
+position = Vector2( 190, 0 )
+MAX_VALUE = 8.0
+SPRITE_NAME = "BlueHealth"
+ALIGNMENT = 2

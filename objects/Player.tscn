@@ -4,11 +4,10 @@
 [ext_resource path="res://objects/Bar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Player.gd" type="Script" id=3]
 
-[sub_resource type="CapsuleShape2D" id=15]
+[sub_resource type="CapsuleShape2D" id=1]
 height = 5.0
 
-[sub_resource type="Animation" id=1]
-resource_name = "Bow"
+[sub_resource type="Animation" id=2]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:region_rect")
@@ -23,8 +22,7 @@ tracks/0/keys = {
 "values": [ Rect2( 76, 75, 38, 25 ), Rect2( 114, 75, 38, 25 ), Rect2( 152, 75, 38, 25 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "BowFinish"
+[sub_resource type="Animation" id=3]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:region_rect")
@@ -39,8 +37,7 @@ tracks/0/keys = {
 "values": [ Rect2( 0, 100, 38, 25 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "FallDown"
+[sub_resource type="Animation" id=4]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -56,8 +53,7 @@ tracks/0/keys = {
 "values": [ Rect2( 80, 0, 20, 25 ), Rect2( 100, 0, 20, 25 ), Rect2( 80, 0, 20, 25 ), Rect2( 120, 0, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "FallLeft"
+[sub_resource type="Animation" id=5]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -73,8 +69,7 @@ tracks/0/keys = {
 "values": [ Rect2( 160, 0, 20, 25 ), Rect2( 20, 25, 20, 25 ), Rect2( 160, 0, 20, 25 ), Rect2( 40, 25, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "FallRight"
+[sub_resource type="Animation" id=6]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -90,8 +85,7 @@ tracks/0/keys = {
 "values": [ Rect2( 140, 0, 20, 25 ), Rect2( 180, 0, 20, 25 ), Rect2( 140, 0, 20, 25 ), Rect2( 0, 25, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "FallUp"
+[sub_resource type="Animation" id=7]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -107,7 +101,7 @@ tracks/0/keys = {
 "values": [ Rect2( 60, 25, 20, 25 ), Rect2( 80, 25, 20, 25 ), Rect2( 60, 25, 20, 25 ), Rect2( 100, 25, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -123,7 +117,7 @@ tracks/0/keys = {
 "values": [ Rect2( 140, 25, 20, 25 ), Rect2( 0, 50, 20, 25 ), Rect2( 140, 25, 20, 25 ), Rect2( 20, 50, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -139,8 +133,7 @@ tracks/0/keys = {
 "values": [ Rect2( 120, 25, 20, 25 ), Rect2( 160, 25, 20, 25 ), Rect2( 120, 25, 20, 25 ), Rect2( 180, 25, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "KnockbackFall"
+[sub_resource type="Animation" id=10]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:region_rect")
@@ -155,8 +148,7 @@ tracks/0/keys = {
 "values": [ Rect2( 58, 100, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "KnockbackGround"
+[sub_resource type="Animation" id=11]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:region_rect")
@@ -171,7 +163,7 @@ tracks/0/keys = {
 "values": [ Rect2( 38, 100, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -187,7 +179,7 @@ tracks/0/keys = {
 "values": [ Rect2( 20, 0, 20, 25 ), Rect2( 60, 0, 20, 25 ), Rect2( 0, 0, 20, 25 ), Rect2( 78, 100, 20, 25 ), Rect2( 40, 0, 20, 25 ), Rect2( 0, 0, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:region_rect")
@@ -202,7 +194,7 @@ tracks/0/keys = {
 "values": [ Rect2( 0, 0, 20, 25 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 0.15
 step = 0.05
 tracks/0/type = "value"
@@ -218,7 +210,7 @@ tracks/0/keys = {
 "values": [ Rect2( 154, 50, 38, 25 ), Rect2( 0, 75, 38, 25 ), Rect2( 38, 75, 38, 25 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=15]
 length = 0.15
 step = 0.05
 tracks/0/type = "value"
@@ -240,7 +232,7 @@ script = ExtResource( 3 )
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2( 10, 13 )
-shape = SubResource( 15 )
+shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -249,20 +241,21 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 20, 25 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
-anims/Bow = SubResource( 1 )
-anims/BowFinish = SubResource( 2 )
-anims/FallDown = SubResource( 3 )
-anims/FallLeft = SubResource( 4 )
-anims/FallRight = SubResource( 5 )
-anims/FallUp = SubResource( 6 )
-anims/JumpDown = SubResource( 7 )
-anims/JumpUp = SubResource( 8 )
-anims/KnockbackFall = SubResource( 9 )
-anims/KnockbackGround = SubResource( 10 )
-anims/Run = SubResource( 11 )
-anims/Stand = SubResource( 12 )
-anims/SwordFall = SubResource( 13 )
-anims/SwordGround = SubResource( 14 )
+autoplay = "Stand"
+anims/Bow = SubResource( 2 )
+anims/BowFinish = SubResource( 3 )
+anims/FallDown = SubResource( 4 )
+anims/FallLeft = SubResource( 5 )
+anims/FallRight = SubResource( 6 )
+anims/FallUp = SubResource( 7 )
+anims/JumpDown = SubResource( 8 )
+anims/JumpUp = SubResource( 9 )
+anims/KnockbackFall = SubResource( 10 )
+anims/KnockbackGround = SubResource( 11 )
+anims/Run = SubResource( 12 )
+anims/Stand = SubResource( 13 )
+anims/SwordFall = SubResource( 14 )
+anims/SwordGround = SubResource( 15 )
 
 [node name="Lock" type="Node" parent="Sprite"]
 

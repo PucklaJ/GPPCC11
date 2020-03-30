@@ -8,7 +8,10 @@ export var MIN_VELOCITY = 10
 export var AIR_DAMPING_MULTIPLIER = 2
 export var AIR_ACCELERATION_MULTIPLIER = 0.8
 
+export var VELOCITY_ANIMATION_THRESHOLD = 0.1
+
 onready var sprite = get_node("Sprite")
+onready var anim = get_node("Sprite/AnimationPlayer")
 
 var velocity = Vector2(0,0)
 
@@ -36,4 +39,20 @@ func ground_movement(delta):
 func _physics_process(delta):
     ground_movement(delta)
     velocity = move_and_slide(velocity,Vector2(0,-1))
-    
+
+func _process(_delta):
+    if abs(velocity.x) > VELOCITY_ANIMATION_THRESHOLD:
+        if velocity.x < 0:
+            sprite.flip_h = true
+        else:
+            sprite.flip_h = false
+    if is_on_floor():
+        if abs(velocity.x) > VELOCITY_ANIMATION_THRESHOLD:
+            anim.play("Run")
+        else:
+            anim.play("Stand")
+    else:
+        if velocity.y < 0:
+            anim.play("JumpUp")
+        else:
+            anim.play("JumpDown")

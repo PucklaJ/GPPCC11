@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://textures/Odin.png" type="Texture" id=1]
 [ext_resource path="res://textures/Odin1.png" type="Texture" id=2]
@@ -26,19 +26,6 @@
 [ext_resource path="res://textures/Odin24.png" type="Texture" id=24]
 [ext_resource path="res://objects/Bar.tscn" type="PackedScene" id=25]
 [ext_resource path="res://src/Odin.gd" type="Script" id=26]
-
-[sub_resource type="CircleShape2D" id=1]
-radius = 20.6933
-
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 16.0
-height = 6.0
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 2.20524, 6 )
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 2.95965, 6 )
 
 [sub_resource type="Animation" id=5]
 length = 0.8
@@ -272,29 +259,24 @@ tracks/0/keys = {
 "values": [ ExtResource( 1 ) ]
 }
 
+[sub_resource type="CircleShape2D" id=20]
+radius = 21.095
+
+[sub_resource type="CapsuleShape2D" id=21]
+radius = 15.0
+height = 22.0
+
 [node name="Odin" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 4
 script = ExtResource( 26 )
-
-[node name="Body" type="CollisionShape2D" parent="."]
-position = Vector2( 23, 55 )
-shape = SubResource( 1 )
-
-[node name="Head" type="CollisionShape2D" parent="."]
-position = Vector2( 25, 22 )
-shape = SubResource( 2 )
-
-[node name="Horn1" type="CollisionShape2D" parent="."]
-position = Vector2( 14, 6 )
-rotation = -0.629889
-shape = SubResource( 3 )
-
-[node name="Horn2" type="CollisionShape2D" parent="."]
-position = Vector2( 35, 6 )
-rotation = 0.164179
-shape = SubResource( 4 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+WAIT_FOR_WALK_TIME = 1.0
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 8 )
+texture = ExtResource( 1 )
 centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
@@ -321,3 +303,12 @@ position = Vector2( 190, 0 )
 MAX_VALUE = 8.0
 SPRITE_NAME = "BlueHealth"
 ALIGNMENT = 2
+
+[node name="Head" type="CollisionShape2D" parent="."]
+position = Vector2( 25, 24 )
+shape = SubResource( 20 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 25, 60 )
+rotation = 1.5708
+shape = SubResource( 21 )

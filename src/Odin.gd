@@ -25,6 +25,7 @@ enum states{
 
 export var GROUND_VELOCITY = 50
 export var GROUND_WALK_POINT = 30
+export var WAIT_FOR_WALK_TIME = 2.0
 
 onready var sprite = get_node("Sprite")
 onready var anim = sprite.get_node("AnimationPlayer")
@@ -39,21 +40,34 @@ func ground_movement(delta):
     velocity += Globals.GRAVITY * delta
     velocity = move_and_slide(velocity,Vector2(0,-1))
 
-func handle_states():
+var time_val = 0.0
+
+func handle_states(delta):
     match state:
         states.walk:
             anim.play("Run")
             if not sprite.flip_h:
                 velocity.x = -GROUND_VELOCITY
                 if position.x + width / 2.0 < GROUND_WALK_POINT:
-                    sprite.flip_h = true
+                    position.x = GROUND_WALK_POINT - width / 2.0
+                    state = states.wait_for_walk
+                    time_val = 0.0
             else:
                 velocity.x = GROUND_VELOCITY
                 if position.x + width / 2.0 > Globals.GAME_WIDTH - GROUND_WALK_POINT:
-                    sprite.flip_h = false
+                    position.x = Globals.GAME_WIDTH - GROUND_WALK_POINT - width / 2.0
+                    state = states.wait_for_walk
+                    time_val = 0.0
+        states.wait_for_walk:
+            anim.play("Stand")
+            velocity.x = 0.0
+            if time_val > WAIT_FOR_WALK_TIME:
+                sprite.flip_h = not sprite.flip_h
+                state = states.walk
+            time_val += delta
 
 func _physics_process(delta):
     ground_movement(delta)
 
-func _process(_delta):
-    handle_states()
+func _process(delta):
+    handle_states(delta)

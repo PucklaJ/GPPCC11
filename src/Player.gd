@@ -12,8 +12,12 @@ export var VELOCITY_ANIMATION_THRESHOLD = 0.1
 
 onready var sprite = get_node("Sprite")
 onready var anim = get_node("Sprite/AnimationPlayer")
+onready var hitbox = get_node("Hitbox")
 
 var velocity = Vector2(0,0)
+
+func _ready():
+    hitbox.connect("body_entered",self,"on_hitbox_entered")
 
 func ground_movement(delta):
     var acceleration = ACCELERATION*delta
@@ -56,3 +60,6 @@ func _process(_delta):
             anim.play("JumpUp")
         else:
             anim.play("JumpDown")
+
+func on_hitbox_entered(body):
+    print(body)

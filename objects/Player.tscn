@@ -242,7 +242,7 @@ shape = SubResource( 1 )
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 0, 0, 20, 25 )
+region_rect = Rect2( 76, 75, 38, 25 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 autoplay = "Stand"

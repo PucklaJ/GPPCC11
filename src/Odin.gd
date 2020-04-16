@@ -26,15 +26,21 @@ enum states{
 export var GROUND_VELOCITY = 50
 export var GROUND_WALK_POINT = 30
 export var WAIT_FOR_WALK_TIME = 2.0
+export var KNOCKBACK_TIME = 2.0
 
 onready var sprite = get_node("Sprite")
 onready var anim = sprite.get_node("AnimationPlayer")
+onready var health_bar = sprite.get_node("Lock/HealthBar")
 
 var width = 50
 var height = 75
 
 var velocity = Vector2(0,0)
 var state = states.walk
+var health = 0.0
+
+func _ready():
+    health = health_bar.MAX_VALUE
 
 func ground_movement(delta):
     velocity += Globals.GRAVITY * delta
@@ -65,9 +71,27 @@ func handle_states(delta):
                 sprite.flip_h = not sprite.flip_h
                 state = states.walk
             time_val += delta
+        states.knockback:
+            time_val += delta
+            if time_val > KNOCKBACK_TIME:
+                if Globals.state == Globals.states.boss_ground:
+                    anim.play("Stand")
+                else:
+                    anim.play("Fall")
+                state = states.wait_for_walk
 
 func _physics_process(delta):
     ground_movement(delta)
 
 func _process(delta):
     handle_states(delta)
+
+func knockback():
+    state = states.knockback
+    velocity.x = 0.0
+    anim.play("Knockback")
+    time_val = 0.0
+
+func damage(amount):
+    health = max(health-amount,0.0)
+    health_bar.set_value(health)

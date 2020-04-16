@@ -10,6 +10,8 @@ export var AIR_ACCELERATION_MULTIPLIER = 0.8
 export var KNOCKBACK_POWER = 100
 export var KNOCKBACK_TIME = 1.0
 export var ODIN_TOUCH_DAMAGE = 1.0
+export var SWORD_DAMAGE = 2.0
+export var SWORD_ATTACK_TIME = 0.30
 
 export var VELOCITY_ANIMATION_THRESHOLD = 0.1
 
@@ -27,6 +29,7 @@ onready var anim = get_node("Sprite/AnimationPlayer")
 onready var hitbox = get_node("Hitbox")
 onready var health_bar = get_node("Sprite/Lock/HealthBar")
 onready var arrow_bar = get_node("Sprite/Lock/ArrowBar")
+onready var sword_hitbox = get_node("Sprite/SwordHitbox")
 
 var velocity = Vector2(0,0)
 var state = states.move
@@ -35,6 +38,7 @@ var health = 0.0
 
 func _ready():
     hitbox.connect("body_entered",self,"on_hitbox_entered")
+    sword_hitbox.connect("body_entered",self,"on_sword_hitbox_entered")
     health = health_bar.MAX_VALUE
 
 func ground_movement(delta):
@@ -62,6 +66,8 @@ func ground_movement(delta):
 var time_val = 0.0
 
 func handle_states(delta):
+    sprite.position = Vector2(0,0)
+    sword_hitbox.position = Vector2(0,0)
     match state:
         states.move:
             if abs(velocity.x) > VELOCITY_ANIMATION_THRESHOLD:
@@ -79,11 +85,31 @@ func handle_states(delta):
                     anim.play("JumpUp")
                 else:
                     anim.play("JumpDown")
+            if Input.is_action_just_pressed("sword"):
+                state = states.sword_attack
+                enable_movement = false
+                time_val = 0.0
+                if Globals.state == Globals.states.boss_ground:
+                    anim.play("SwordGround")
+                else:
+                    anim.play("SwordFall")
         states.knockback:
             time_val += delta
             if time_val > KNOCKBACK_TIME:
                 enable_movement = true
                 state = states.move
+        states.sword_attack:
+            time_val += delta
+            if sprite.flip_h:
+                sprite.position = Vector2(-18,0)
+                sword_hitbox.position = Vector2(-16,0)
+            if time_val > SWORD_ATTACK_TIME:
+                if Globals.state == Globals.states.boss_ground:
+                    anim.play("Stand")
+                else:
+                    anim.play("FallDown")
+                state = states.move
+                enable_movement = true
 
 func _physics_process(delta):
     ground_movement(delta)
@@ -104,11 +130,15 @@ func knockback(pos):
             anim.play("KnockbackFall")
         velocity = (position - pos).normalized() * KNOCKBACK_POWER
         enable_movement = false
+        sword_hitbox.monitoring = false
         time_val = 0.0
     state = states.knockback
 
 func on_hitbox_entered(body):
-    print(body)
-    if body.collision_layer & 2:
+    if body.state != 6:
         knockback(body.position + Vector2(0,60))
         damage(ODIN_TOUCH_DAMAGE)
+
+func on_sword_hitbox_entered(body):
+    body.knockback()
+    body.damage(SWORD_DAMAGE)

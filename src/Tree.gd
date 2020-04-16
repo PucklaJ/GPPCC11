@@ -7,7 +7,7 @@ var sprites = []
 var width
 var height
 
-var scroll_active = true
+var scroll_active = false
 
 func _ready():
     var scroll_container = get_child(1)

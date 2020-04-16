@@ -122,23 +122,29 @@ func damage(amount):
     health = max(health - amount,0.0)
     health_bar.set_value(health)
     
-func knockback(pos):
+func knockback(pos,multiplier=1.0):
     if state != states.knockback:
         if Globals.state == Globals.states.boss_ground:
             anim.play("KnockbackGround")
         else:
             anim.play("KnockbackFall")
-        velocity = (position - pos).normalized() * KNOCKBACK_POWER
+        velocity = (position - pos).normalized() * KNOCKBACK_POWER * multiplier
         enable_movement = false
         sword_hitbox.monitoring = false
         time_val = 0.0
     state = states.knockback
 
 func on_hitbox_entered(body):
-    if body.state != 6:
+    if body.can_inflict_damage() and can_be_damaged():
         knockback(body.position + Vector2(0,60))
         damage(ODIN_TOUCH_DAMAGE)
 
 func on_sword_hitbox_entered(body):
-    body.knockback()
-    body.damage(SWORD_DAMAGE)
+    if body.can_be_damaged():
+        body.knockback()
+        body.damage(SWORD_DAMAGE)
+
+func can_be_damaged():
+    match state:
+        states.knockback: return false
+    return true

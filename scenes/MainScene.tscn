@@ -62,3 +62,7 @@ shape = SubResource( 3 )
 
 [node name="Shape3" type="CollisionShape2D" parent="Border/Border2"]
 shape = SubResource( 4 )
+
+[node name="PickUpTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true

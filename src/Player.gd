@@ -14,6 +14,7 @@ export var SWORD_DAMAGE = 2.0
 export var SWORD_ATTACK_TIME = 0.30
 export var BOW_PREPARE_TIME = 0.5
 export var BOW_ATTACK_TIME = 1.0
+export var START_ARROW_AMOUNT = 0.0
 
 export var VELOCITY_ANIMATION_THRESHOLD = 0.1
 
@@ -49,7 +50,8 @@ func _ready():
     hitbox.connect("body_entered",self,"on_hitbox_entered")
     sword_hitbox.connect("body_entered",self,"on_sword_hitbox_entered")
     health = health_bar.MAX_VALUE
-    arrows = arrow_bar.MAX_VALUE
+    arrows = START_ARROW_AMOUNT
+    arrow_bar.set_value(arrows)
 
 func ground_movement(delta):
     var acceleration = ACCELERATION*delta
@@ -158,7 +160,7 @@ func _process(delta):
     handle_states(delta)
     
 func damage(amount):
-    health = max(health - amount,0.0)
+    health = clamp(health-amount,0.0,health_bar.MAX_VALUE)
     health_bar.set_value(health)
     
 func knockback(pos,multiplier=1.0):
@@ -199,6 +201,10 @@ func shoot_arrow():
     else:
         arrow.flip_h = true
     get_tree().get_root().add_child(arrow)
+
+func collect_arrow(amount):
+    arrows = min(arrows+amount,arrow_bar.MAX_VALUE)
+    arrow_bar.set_value(arrows)
 
 func get_position():
     return position + Vector2(width,height)/2.0

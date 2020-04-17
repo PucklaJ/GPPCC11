@@ -212,6 +212,7 @@ func knockback():
     velocity.x = 0.0
     anim.play("Knockback")
     time_val = 0.0
+    speer_thrown = 0.0
     axe_hitbox.monitoring = false
 
 func damage(amount):

@@ -291,7 +291,7 @@ __meta__ = {
 WAIT_FOR_WALK_TIME = 1.0
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 20 )
+texture = ExtResource( 1 )
 centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
@@ -320,6 +320,7 @@ SPRITE_NAME = "BlueHealth"
 ALIGNMENT = 2
 
 [node name="AxeHitbox" type="Area2D" parent="Sprite"]
+monitoring = false
 monitorable = false
 collision_layer = 8
 

@@ -30,7 +30,7 @@ export var KNOCKBACK_TIME = 2.0
 export var KNOCKBACK_EXPLOSION_WAIT_TIME = 0.25
 export var KNOCKBACK_EXPLOSION_TIME = 0.5
 export var KNOCKBACK_EXPLOSION_RADIUS = 100.0
-export var HIT_ON_GROUND_RADIUS = 100.0
+export var HIT_ON_GROUND_RADIUS = 80.0
 export var WAIT_FOR_HIT_ON_GROUND_TIME = 1.0
 export var HIT_ON_GROUND_TIME = 0.5
 export var AXE_DAMAGE = 2.0
@@ -76,7 +76,7 @@ func handle_states(delta):
                     position.x = Globals.GAME_WIDTH - GROUND_WALK_POINT - width / 2.0
                     state = states.wait_for_walk
                     time_val = 0.0
-            if player.position.distance_squared_to(position) < HIT_ON_GROUND_RADIUS * HIT_ON_GROUND_RADIUS:
+            if player.get_position().distance_squared_to(get_position()) < HIT_ON_GROUND_RADIUS * HIT_ON_GROUND_RADIUS:
                 state = states.wait_for_hit_on_ground
                 time_val = 0.0
                 anim.play("HitWait1")
@@ -92,6 +92,15 @@ func handle_states(delta):
                 sprite.flip_h = not sprite.flip_h
                 state = states.walk
             time_val += delta
+            if player.get_position().distance_squared_to(get_position()) < HIT_ON_GROUND_RADIUS * HIT_ON_GROUND_RADIUS:
+                state = states.wait_for_hit_on_ground
+                time_val = 0.0
+                anim.play("HitWait1")
+                velocity.x = 0.0
+                if player.position.x > position.x:
+                    sprite.flip_h = true
+                else:
+                    sprite.flip_h = false
         states.knockback:
             time_val += delta
             if time_val > KNOCKBACK_TIME:
@@ -159,7 +168,7 @@ func damage(amount):
     health_bar.set_value(health)
 
 func knockback_explosion():
-    if player.position.distance_squared_to(position) < KNOCKBACK_EXPLOSION_RADIUS*KNOCKBACK_EXPLOSION_RADIUS:
+    if player.get_position().distance_squared_to(get_position()) < KNOCKBACK_EXPLOSION_RADIUS*KNOCKBACK_EXPLOSION_RADIUS:
         player.knockback(position+Vector2(0,60),2.0)
 
 func can_be_damaged():
@@ -174,3 +183,6 @@ func on_axe_entered(body):
     if body.can_be_damaged():
         body.knockback(axe_hitbox.get_child(0).global_position)
         body.damage(AXE_DAMAGE)
+
+func get_position():
+    return position + Vector2(width,height)/2.0

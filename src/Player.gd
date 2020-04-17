@@ -42,6 +42,9 @@ var enable_movement = true
 var health = 0.0
 var arrows = 0.0
 
+var width = 20
+var height = 25
+
 func _ready():
     hitbox.connect("body_entered",self,"on_hitbox_entered")
     sword_hitbox.connect("body_entered",self,"on_sword_hitbox_entered")
@@ -196,3 +199,6 @@ func shoot_arrow():
     else:
         arrow.flip_h = true
     get_tree().get_root().add_child(arrow)
+
+func get_position():
+    return position + Vector2(width,height)/2.0

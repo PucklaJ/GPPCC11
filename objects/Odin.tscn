@@ -271,13 +271,13 @@ tracks/0/keys = {
 "values": [ ExtResource( 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=18]
+[sub_resource type="RectangleShape2D" id=16]
 extents = Vector2( 26, 15 )
 
-[sub_resource type="CircleShape2D" id=16]
+[sub_resource type="CircleShape2D" id=17]
 radius = 21.095
 
-[sub_resource type="CapsuleShape2D" id=17]
+[sub_resource type="CapsuleShape2D" id=18]
 radius = 15.0
 height = 22.0
 
@@ -326,13 +326,16 @@ collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/AxeHitbox"]
 position = Vector2( 31, 60 )
-shape = SubResource( 18 )
+shape = SubResource( 16 )
 
 [node name="Head" type="CollisionShape2D" parent="."]
 position = Vector2( 25, 24 )
-shape = SubResource( 16 )
+shape = SubResource( 17 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 25, 60 )
 rotation = 1.5708
-shape = SubResource( 17 )
+shape = SubResource( 18 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 25, 37.5 )

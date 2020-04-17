@@ -1,7 +1,19 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://textures/speer.png" type="Texture" id=1]
+[ext_resource path="res://src/Speer.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 12.5, 0.5 )
 
 [node name="Speer" type="Sprite"]
 texture = ExtResource( 1 )
-centered = false
+flip_h = true
+script = ExtResource( 2 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+monitorable = false
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource( 1 )

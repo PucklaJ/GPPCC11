@@ -320,7 +320,6 @@ SPRITE_NAME = "BlueHealth"
 ALIGNMENT = 2
 
 [node name="AxeHitbox" type="Area2D" parent="Sprite"]
-monitoring = false
 monitorable = false
 collision_layer = 8
 
@@ -328,14 +327,14 @@ collision_layer = 8
 position = Vector2( 31, 60 )
 shape = SubResource( 16 )
 
+[node name="SpeerStart" type="Position2D" parent="Sprite"]
+position = Vector2( 15, 34 )
+
 [node name="Head" type="CollisionShape2D" parent="."]
 position = Vector2( 25, 24 )
 shape = SubResource( 17 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Body" type="CollisionShape2D" parent="."]
 position = Vector2( 25, 60 )
 rotation = 1.5708
 shape = SubResource( 18 )
-
-[node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 25, 37.5 )

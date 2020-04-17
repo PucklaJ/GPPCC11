@@ -34,11 +34,17 @@ export var HIT_ON_GROUND_RADIUS = 80.0
 export var WAIT_FOR_HIT_ON_GROUND_TIME = 1.0
 export var HIT_ON_GROUND_TIME = 0.5
 export var AXE_DAMAGE = 2.0
+export var SPEER_THROW_FREQUENCY = 1.5
+export var SPEER_WAIT_TIME = 0.5
+export var SPEER_THROW_TIME = 0.25
+export var SPEER_THROW_AMOUNT = 2
 
 onready var sprite = get_node("Sprite")
 onready var anim = sprite.get_node("AnimationPlayer")
 onready var health_bar = sprite.get_node("Lock/HealthBar")
 onready var axe_hitbox = sprite.get_node("AxeHitbox")
+onready var speer_start = sprite.get_node("SpeerStart")
+onready var speer_scene = preload("res://objects/Speer.tscn")
 
 var width = 50
 var height = 75
@@ -47,6 +53,7 @@ var velocity = Vector2(0,0)
 var state = states.walk
 var health = 0.0
 var player = null
+var speer_thrown = 0
 
 func _ready():
     health = health_bar.MAX_VALUE
@@ -61,6 +68,7 @@ var time_val = 0.0
 func handle_states(delta):
     sprite.position = Vector2(0,0)
     axe_hitbox.position = Vector2(0,0)
+    speer_start.position = Vector2(15,34)
     match state:
         states.walk:
             anim.play("Run")
@@ -85,6 +93,19 @@ func handle_states(delta):
                     sprite.flip_h = true
                 else:
                     sprite.flip_h = false
+            elif time_val > SPEER_THROW_FREQUENCY:
+                time_val = 0.0
+                if Globals.state == Globals.states.boss_ground:
+                    anim.play("SpeerWaitGround")
+                else:
+                    anim.play("SpeerWaitFall")
+                velocity.x = 0.0
+                if player.get_position().x > get_position().x:
+                    sprite.flip_h = true
+                else:
+                    sprite.flip_h = false
+                state = states.wait_for_second_speer
+            time_val += delta
         states.wait_for_walk:
             anim.play("Stand")
             velocity.x = 0.0
@@ -149,6 +170,36 @@ func handle_states(delta):
                     anim.play("Stand")
                 else:
                     anim.play("Fall")
+        states.wait_for_second_speer:
+            time_val += delta
+            if sprite.flip_h:
+                sprite.position = Vector2(-20,0)
+                speer_start.position = Vector2(55,34)
+            if time_val > SPEER_WAIT_TIME:
+                if speer_thrown == SPEER_THROW_AMOUNT:
+                    state = states.walk
+                    if Globals.state == Globals.states.boss_ground:
+                        anim.play("Stand")
+                    else:
+                        anim.play("Fall")
+                    speer_thrown = 0
+                    time_val = 0.0
+                else:
+                    if Globals.state == Globals.states.boss_ground:
+                        anim.play("SpeerThrowGround")
+                    else:
+                        anim.play("SpeerThrowFall")
+                    time_val = 0.0
+                    throw_speer()
+                    state = states.wait_for_grab_new_speer
+        states.wait_for_grab_new_speer:
+            time_val += delta
+            if sprite.flip_h:
+                sprite.position = Vector2(-20,0)
+                speer_start.position = Vector2(55,34)
+            if time_val > SPEER_THROW_TIME:
+                time_val = 0.0
+                state = states.wait_for_second_speer
 
 func _physics_process(delta):
     ground_movement(delta)
@@ -186,3 +237,10 @@ func on_axe_entered(body):
 
 func get_position():
     return position + Vector2(width,height)/2.0
+
+func throw_speer():
+    speer_thrown += 1
+    var speer = speer_scene.instance()
+    speer.position = speer_start.global_position
+    speer.direction = (player.get_position() - speer_start.global_position).normalized()
+    get_tree().get_root().add_child(speer)

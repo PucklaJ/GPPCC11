@@ -279,7 +279,7 @@ radius = 21.095
 
 [sub_resource type="CapsuleShape2D" id=18]
 radius = 15.0
-height = 22.0
+height = 4.0
 
 [node name="Odin" type="KinematicBody2D"]
 collision_layer = 2
@@ -333,6 +333,7 @@ position = Vector2( 15, 34 )
 
 [node name="Head" type="CollisionShape2D" parent="."]
 position = Vector2( 25, 24 )
+scale = Vector2( 0.720001, 1 )
 shape = SubResource( 17 )
 
 [node name="Body" type="CollisionShape2D" parent="."]

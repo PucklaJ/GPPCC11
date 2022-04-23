@@ -1,7 +1,8 @@
 set_project("GPPCC11")
 
-add_repositories("PucklaMotzer09 https://github.com/PucklaMotzer09/xmake-repo.git johnnyengine")
-add_requires("johnnyengine")
+add_repositories("PucklaMotzer09::JohnnyEngine https://github.com/PucklaMotzer09/xmake-repo.git johnnyengine")
+add_repositories("PucklaMotzer09::cAudio https://github.com/PucklaMotzer09/xmake-repo.git caudio")
+add_requires("johnnyengine", "caudio")
 
 add_rules("mode.debug", "mode.release")
 target("battle_of_yggdrasil")
@@ -9,7 +10,7 @@ target("battle_of_yggdrasil")
   if is_plat("windows") then
     add_cxxflags("/EHsc")
   end
-  add_packages("johnnyengine")
+  add_packages("johnnyengine", "caudio")
 
   add_files("src/*.cpp")
   add_includedirs("include")

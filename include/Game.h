@@ -1,7 +1,7 @@
 #pragma once
 #include <MainClass.h>
 #include <JoystickListener.h>
-#include <cAudio/cAudio.h>
+#include <cAudio.h>
 
 using namespace Johnny;
 

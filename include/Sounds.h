@@ -1,7 +1,7 @@
 #ifndef SOUNDS_H
 #define SOUNDS_H
 
-#include <cAudio/cAudio.h>
+#include <cAudio.h>
 
 namespace Sounds
 {

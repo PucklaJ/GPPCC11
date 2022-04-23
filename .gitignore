@@ -40,3 +40,5 @@ Release
 .*
 !.gitignore
 compile_commands.json
+build
+log.txt

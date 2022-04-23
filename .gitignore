@@ -36,3 +36,7 @@ Release
 *.mk
 *.project
 *.html
+
+.*
+!.gitignore
+compile_commands.json

@@ -21,7 +21,6 @@ export var VELOCITY_ANIMATION_THRESHOLD = 0.1
 
 enum states {
 	move,
-	move_fall,
 	sword_attack,
 	bow_attack,
 	knockback,
@@ -59,10 +58,9 @@ func _ready():
 	arrow_bar.set_value(arrows)
 	
 func _physics_process(delta):
-	if state != states.move_fall:
-		if state != states.fall_intro:
-			ground_movement(delta)
-		velocity = move_and_slide(velocity,Vector2(0,-1))
+	if Globals.state == Globals.states.boss_ground:
+		ground_movement(delta)
+	velocity = move_and_slide(velocity,Vector2(0,-1))
 
 func _process(delta):
 	handle_states(delta)
@@ -104,6 +102,7 @@ func fall_movement(dt: float):
 	position += velocity * dt
 
 var time_val = 0.0
+var sword_direction = 1.0
 
 func handle_states(delta: float):
 	sprite.position = Vector2(0,0)
@@ -111,21 +110,34 @@ func handle_states(delta: float):
 	arrow_start.position = Vector2(11,17)
 	match state:
 		states.move:
-			if abs(velocity.x) > VELOCITY_ANIMATION_THRESHOLD:
-				if velocity.x < 0:
-					sprite.flip_h = true
-				else:
-					sprite.flip_h = false
-			if is_on_floor():
+			if Globals.state == Globals.states.boss_ground:
 				if abs(velocity.x) > VELOCITY_ANIMATION_THRESHOLD:
-					anim.play("Run")
+					if velocity.x < 0:
+						sprite.flip_h = true
+					else:
+						sprite.flip_h = false
+				if is_on_floor():
+					if abs(velocity.x) > VELOCITY_ANIMATION_THRESHOLD:
+						anim.play("Run")
+					else:
+						anim.play("Stand")
 				else:
-					anim.play("Stand")
+					if velocity.y < 0:
+						anim.play("JumpUp")
+					else:
+						anim.play("JumpDown")
 			else:
-				if velocity.y < 0:
-					anim.play("JumpUp")
+				fall_movement(delta)
+				if velocity.x > VELOCITY_ANIMATION_THRESHOLD:
+					anim.play("FallRight")
+					sword_direction = 1.0
+				elif velocity.x < -VELOCITY_ANIMATION_THRESHOLD:
+					anim.play("FallLeft")
+					sword_direction = -1.0
+				elif velocity.y < -VELOCITY_ANIMATION_THRESHOLD:
+					anim.play("FallUp")
 				else:
-					anim.play("JumpDown")
+					anim.play("FallDown")
 			if Input.is_action_just_pressed("sword"):
 				state = states.sword_attack
 				enable_movement = false
@@ -134,19 +146,19 @@ func handle_states(delta: float):
 					anim.play("SwordGround")
 				else:
 					anim.play("SwordFall")
+					sprite.flip_h = sword_direction == -1.0
 			elif Input.is_action_just_pressed("bow"):
 				if arrows > 0.0:
 					state = states.bow_prepare
 					enable_movement = false
 					time_val = 0.0 
 					anim.play("Bow")
-		states.move_fall:
-			fall_movement(delta)
 		states.fall_intro:
 			if position.y > FALL_POS_Y:
 				position.y = FALL_POS_Y
 				enable_movement = true
-				state = states.move_fall
+				$Collision.set_deferred("disabled", false)
+				state = states.move
 		states.knockback:
 			time_val += delta
 			if time_val > KNOCKBACK_TIME:
@@ -161,6 +173,8 @@ func handle_states(delta: float):
 				if Globals.state == Globals.states.boss_ground:
 					anim.play("Stand")
 				else:
+					sprite.flip_h = false
+					sprite.position = Vector2(0.0, 0.0)
 					anim.play("FallDown")
 				state = states.move
 				enable_movement = true
@@ -181,10 +195,11 @@ func handle_states(delta: float):
 			if time_val > BOW_ATTACK_TIME:
 				if Globals.state == Globals.states.boss_ground:
 					anim.play("Stand")
+					state = states.move
 				else:
 					anim.play("FallDown")
+					state = states.move_fall
 				time_val = 0.0
-				state = states.move
 				enable_movement = true
 	
 func damage(amount):

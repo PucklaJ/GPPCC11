@@ -30,9 +30,11 @@ func _process(_dt: float):
 		
 		player.position.y = -100
 		player.state = player.states.fall_intro
+		player.get_node("Collision").set_deferred("disabled", true)
 		odin.position.x = 250
 		odin.position.y = -100
 		odin.state = odin.states.fall
+		Globals.state = Globals.states.boss_fall
 		
 		queue_free()
 		get_parent().add_child(fall_scene)

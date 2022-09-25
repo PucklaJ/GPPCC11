@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+const speer_scene : PackedScene = preload("res://objects/Speer.tscn")
+const lightning_scene : PackedScene = preload("res://objects/Lightning.tscn")
+
 enum states{
 	walk,
 	fall,
@@ -15,11 +18,13 @@ enum states{
 	teleport_wait,
 	teleport_attack,
 	intro,
+	fall_intro,
 	fall_game_over,
 	ground_game_over,
 	wait_for_walk_game_over,
 	wait_for_grab_new_speer,
 	wait_for_lightning_throw,
+	wait_after_lightning_throw,
 	fall_from_ground,
 	none
 }
@@ -40,13 +45,14 @@ export var SPEER_WAIT_TIME = 0.5
 export var SPEER_THROW_TIME = 0.25
 export var SPEER_THROW_AMOUNT = 2
 export var FALL_POS_Y : float = 100.0
+export var FALL_VELOCITY : float = 50.0
+export var LIGHTNING_PROBABILITY : float = 0.75
 
 onready var sprite = get_node("Sprite")
 onready var anim = sprite.get_node("AnimationPlayer")
 onready var health_bar = sprite.get_node("Lock/HealthBar")
 onready var axe_hitbox = sprite.get_node("AxeHitbox")
 onready var speer_start = sprite.get_node("SpeerStart")
-onready var speer_scene = preload("res://objects/Speer.tscn")
 
 var width = 50
 var height = 75
@@ -113,10 +119,7 @@ func handle_states(delta):
 					sprite.flip_h = false
 			elif time_val > SPEER_THROW_FREQUENCY:
 				time_val = 0.0
-				if Globals.state == Globals.states.boss_ground:
-					anim.play("SpeerWaitGround")
-				else:
-					anim.play("SpeerWaitFall")
+				anim.play("SpeerWaitGround")
 				velocity.x = 0.0
 				if player.get_position().x > get_position().x:
 					sprite.flip_h = true
@@ -124,11 +127,46 @@ func handle_states(delta):
 					sprite.flip_h = false
 				state = states.wait_for_second_speer
 			time_val += delta
-		states.fall:
-			anim.play("Fall")
+		states.fall_intro:
 			if position.y >= FALL_POS_Y:
 				acceleration = Vector2.ZERO
 				position.y = FALL_POS_Y
+				state = states.fall
+				time_val = 0.0
+		states.fall:
+			anim.play("Fall")
+			if velocity.y == 0.0:
+				velocity.y = FALL_VELOCITY
+			elif velocity.y > 0.0:
+				if position.y > 100.0:
+					position.y = 100.0
+					velocity.y = -FALL_VELOCITY
+			else:
+				if position.y < 20.0:
+					position.y = 20.0
+					velocity.y = FALL_VELOCITY
+			if time_val > SPEER_THROW_FREQUENCY:
+				time_val = 0.0
+				velocity.y = 0.0
+				if randf() > LIGHTNING_PROBABILITY:
+					anim.play("SpeerWaitFall")
+					state = states.wait_for_second_speer
+				else:
+					anim.play("LightningWait")
+					state = states.wait_for_lightning_throw
+			time_val += delta
+		states.wait_for_lightning_throw:
+			time_val += delta
+			if time_val > SPEER_WAIT_TIME:
+				time_val = 0.0
+				anim.play("LightningThrow")
+				throw_lightning()
+				state = states.wait_after_lightning_throw
+		states.wait_after_lightning_throw:
+			time_val += delta
+			if time_val > SPEER_WAIT_TIME:
+				time_val = 0.0
+				state = states.fall
 		states.wait_for_walk:
 			anim.play("Stand")
 			velocity.x = 0.0
@@ -166,9 +204,10 @@ func handle_states(delta):
 			if time_val > KNOCKBACK_EXPLOSION_TIME:
 				if Globals.state == Globals.states.boss_ground:
 					anim.play("Stand")
+					state = states.walk
 				else:
 					anim.play("Fall")
-				state = states.walk
+					state = states.fall
 				time_val = 0.0
 		states.wait_for_hit_on_ground:
 			if not sprite.flip_h:
@@ -200,11 +239,12 @@ func handle_states(delta):
 				speer_start.position = Vector2(55,34)
 			if time_val > SPEER_WAIT_TIME:
 				if speer_thrown == SPEER_THROW_AMOUNT:
-					state = states.walk
 					if Globals.state == Globals.states.boss_ground:
 						anim.play("Stand")
+						state = states.walk
 					else:
 						anim.play("Fall")
+						state = states.fall
 					speer_thrown = 0
 					time_val = 0.0
 				else:
@@ -227,6 +267,7 @@ func handle_states(delta):
 func knockback():
 	state = states.knockback
 	velocity.x = 0.0
+	velocity.y = 0.0
 	anim.play("Knockback")
 	time_val = 0.0
 	speer_thrown = 0.0
@@ -262,6 +303,11 @@ func throw_speer():
 	speer.position = speer_start.global_position
 	speer.direction = (player.get_position() - speer_start.global_position).normalized()
 	get_tree().get_root().add_child(speer)
+	
+func throw_lightning():
+	var lightning = lightning_scene.instance()
+	lightning.position = speer_start.global_position
+	get_tree().get_root().add_child(lightning)
 	
 func init_destroy_ground():
 	$Sprite/AxeHitbox/CollisionShape2D.set_deferred("disabled", true)

@@ -33,7 +33,7 @@ func _process(_dt: float):
 		player.get_node("Collision").set_deferred("disabled", true)
 		odin.position.x = 250
 		odin.position.y = -100
-		odin.state = odin.states.fall
+		odin.state = odin.states.fall_intro
 		Globals.state = Globals.states.boss_fall
 		
 		queue_free()

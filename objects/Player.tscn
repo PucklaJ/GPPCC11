@@ -297,9 +297,9 @@ position = Vector2( 0, 13 )
 SPRITE_NAME = "Arrow"
 
 [node name="SwordHitbox" type="Area2D" parent="Sprite"]
+collision_mask = 2
 monitoring = false
 monitorable = false
-collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/SwordHitbox"]
 position = Vector2( 27, 19 )

@@ -1,5 +1,11 @@
 # Prerequisites
 *.d
+.*
+!.gitignore
+build
+log.txt
+cAudioEngineLog.html
+compile_commands.json
 
 # Compiled Object files
 *.slo

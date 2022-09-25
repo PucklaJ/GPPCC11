@@ -6,8 +6,8 @@ onready var pickup_timer = get_node("PickUpTimer")
 onready var pickup_scene = preload("res://objects/PickUp.tscn")
 
 func _ready():
-    odin.player = player
-    pickup_timer.connect("timeout",self,"on_pickup_timer_timeout")
+	odin.player = player
+	pickup_timer.connect("timeout",self,"on_pickup_timer_timeout")
 
 func on_pickup_timer_timeout():
-    add_child(pickup_scene.instance())
+	add_child(pickup_scene.instance())

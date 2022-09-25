@@ -15,7 +15,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Battle of Yggdrasil"
-run/main_scene="res://scenes/MainScene.tscn"
+run/main_scene="res://scenes/GroundScene.tscn"
 config/icon="res://textures/heart.png"
 
 [autoload]

@@ -15,16 +15,21 @@ export var SWORD_ATTACK_TIME = 0.30
 export var BOW_PREPARE_TIME = 0.5
 export var BOW_ATTACK_TIME = 1.0
 export var START_ARROW_AMOUNT = 0.0
+export var FALL_POS_Y : float = 100.0
 
 export var VELOCITY_ANIMATION_THRESHOLD = 0.1
 
 enum states {
 	move,
+	move_fall,
 	sword_attack,
 	bow_attack,
 	knockback,
 	bow_prepare,
 	intro,
+	fall_intro,
+	fall_from_ground,
+	none,
 }
 
 onready var arrow_scene = preload("res://objects/Arrow.tscn")
@@ -52,6 +57,15 @@ func _ready():
 	health = health_bar.MAX_VALUE
 	arrows = START_ARROW_AMOUNT
 	arrow_bar.set_value(arrows)
+	
+func _physics_process(delta):
+	if state != states.move_fall:
+		if state != states.fall_intro:
+			ground_movement(delta)
+		velocity = move_and_slide(velocity,Vector2(0,-1))
+
+func _process(delta):
+	handle_states(delta)
 
 func ground_movement(delta):
 	var acceleration = ACCELERATION*delta
@@ -74,10 +88,24 @@ func ground_movement(delta):
 		if enable_movement and Input.is_action_just_pressed("jump"):
 			velocity.y -= JUMP_POWER
 	velocity += Globals.GRAVITY * delta
+	
+func fall_movement(dt: float):
+	if enable_movement:
+		velocity = Vector2.ZERO
+		if Input.is_action_pressed("move_right"):
+			velocity.x = VELOCITY
+		elif Input.is_action_pressed("move_left"):
+			velocity.x = -VELOCITY
+		elif Input.is_action_pressed("move_down"):
+			velocity.y = VELOCITY
+		elif Input.is_action_pressed("move_up"):
+			velocity.y = -VELOCITY
+	
+	position += velocity * dt
 
 var time_val = 0.0
 
-func handle_states(delta):
+func handle_states(delta: float):
 	sprite.position = Vector2(0,0)
 	sword_hitbox.position = Vector2(0,0)
 	arrow_start.position = Vector2(11,17)
@@ -112,6 +140,13 @@ func handle_states(delta):
 					enable_movement = false
 					time_val = 0.0 
 					anim.play("Bow")
+		states.move_fall:
+			fall_movement(delta)
+		states.fall_intro:
+			if position.y > FALL_POS_Y:
+				position.y = FALL_POS_Y
+				enable_movement = true
+				state = states.move_fall
 		states.knockback:
 			time_val += delta
 			if time_val > KNOCKBACK_TIME:
@@ -151,13 +186,6 @@ func handle_states(delta):
 				time_val = 0.0
 				state = states.move
 				enable_movement = true
-
-func _physics_process(delta):
-	ground_movement(delta)
-	velocity = move_and_slide(velocity,Vector2(0,-1))
-
-func _process(delta):
-	handle_states(delta)
 	
 func damage(amount):
 	health = clamp(health-amount,0.0,health_bar.MAX_VALUE)
@@ -208,3 +236,8 @@ func collect_arrow(amount):
 
 func get_position():
 	return position + Vector2(width,height)/2.0
+
+
+func on_screen_exited():
+	if state == states.fall_from_ground:
+		get_parent().on_player_exited()

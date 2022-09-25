@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://textures/Odin.png" type="Texture" id=1]
 [ext_resource path="res://textures/Odin1.png" type="Texture" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://textures/Odin24.png" type="Texture" id=24]
 [ext_resource path="res://objects/Bar.tscn" type="PackedScene" id=25]
 [ext_resource path="res://src/Odin.gd" type="Script" id=26]
+[ext_resource path="res://src/OdinVisibility.gd" type="Script" id=27]
 
 [sub_resource type="Animation" id=19]
 resource_name = "DestroyGround"
@@ -374,6 +375,7 @@ __meta__ = {
 "_edit_horizontal_guides_": [  ]
 }
 WAIT_FOR_WALK_TIME = 1.0
+FALL_POS_Y = 40.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 18 )
@@ -427,3 +429,8 @@ shape = SubResource( 17 )
 position = Vector2( 25, 60 )
 rotation = 1.5708
 shape = SubResource( 18 )
+
+[node name="Visibility" type="VisibilityNotifier2D" parent="."]
+script = ExtResource( 27 )
+
+[connection signal="screen_exited" from="Visibility" to="." method="on_screen_exited"]

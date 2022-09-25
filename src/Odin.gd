@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 enum states{
 	walk,
+	fall,
 	wait_for_walk,
 	wait_for_second_speer,
 	wait_for_hit_on_ground,
@@ -10,8 +11,6 @@ enum states{
 	knockback,
 	awake_from_knockback,
 	knockback_explosion,
-	destroy_ground_jump_up,
-	destroy_ground_jump_down,
 	destroy_ground,
 	teleport_wait,
 	teleport_attack,
@@ -21,6 +20,7 @@ enum states{
 	wait_for_walk_game_over,
 	wait_for_grab_new_speer,
 	wait_for_lightning_throw,
+	fall_from_ground,
 	none
 }
 
@@ -39,6 +39,7 @@ export var SPEER_THROW_FREQUENCY = 1.5
 export var SPEER_WAIT_TIME = 0.5
 export var SPEER_THROW_TIME = 0.25
 export var SPEER_THROW_AMOUNT = 2
+export var FALL_POS_Y : float = 100.0
 
 onready var sprite = get_node("Sprite")
 onready var anim = sprite.get_node("AnimationPlayer")
@@ -51,6 +52,7 @@ var width = 50
 var height = 75
 
 var velocity = Vector2(0,0)
+var acceleration = Globals.GRAVITY
 var state = states.walk
 var health = 0.0
 var player = null
@@ -75,14 +77,14 @@ func _process(delta):
 	handle_states(delta)
 
 func ground_movement(delta):
-	velocity += Globals.GRAVITY * delta
+	velocity += acceleration * delta
 	velocity = move_and_slide(velocity,Vector2(0,-1))
 
 var time_val = 0.0
 
 func handle_states(delta):
 	if state != states.destroy_ground:
-		sprite.position = Vector2(0,0)
+		sprite.position.x = 0
 	axe_hitbox.position = Vector2(0,0)
 	speer_start.position = Vector2(15,34)
 	match state:
@@ -122,6 +124,11 @@ func handle_states(delta):
 					sprite.flip_h = false
 				state = states.wait_for_second_speer
 			time_val += delta
+		states.fall:
+			anim.play("Fall")
+			if position.y >= FALL_POS_Y:
+				acceleration = Vector2.ZERO
+				position.y = FALL_POS_Y
 		states.wait_for_walk:
 			anim.play("Stand")
 			velocity.x = 0.0
@@ -165,7 +172,7 @@ func handle_states(delta):
 				time_val = 0.0
 		states.wait_for_hit_on_ground:
 			if not sprite.flip_h:
-				sprite.position = Vector2(-50,0)
+				sprite.position.x = -50
 			else:
 				axe_hitbox.position = Vector2(39,0)
 			time_val += delta
@@ -175,7 +182,7 @@ func handle_states(delta):
 				state = states.hit_on_ground
 		states.hit_on_ground:
 			if not sprite.flip_h:
-				sprite.position = Vector2(-50,0)
+				sprite.position.x = -50
 			else:
 				axe_hitbox.position = Vector2(39,0)
 			time_val += delta
@@ -189,7 +196,7 @@ func handle_states(delta):
 		states.wait_for_second_speer:
 			time_val += delta
 			if sprite.flip_h:
-				sprite.position = Vector2(-20,0)
+				sprite.position.x = -20
 				speer_start.position = Vector2(55,34)
 			if time_val > SPEER_WAIT_TIME:
 				if speer_thrown == SPEER_THROW_AMOUNT:
@@ -211,7 +218,7 @@ func handle_states(delta):
 		states.wait_for_grab_new_speer:
 			time_val += delta
 			if sprite.flip_h:
-				sprite.position = Vector2(-20,0)
+				sprite.position.x = -20
 				speer_start.position = Vector2(55,34)
 			if time_val > SPEER_THROW_TIME:
 				time_val = 0.0
@@ -260,9 +267,21 @@ func init_destroy_ground():
 	$Sprite/AxeHitbox/CollisionShape2D.set_deferred("disabled", true)
 	$Head.set_deferred("disabled", true)
 	$Body.set_deferred("disabled", true)
+	acceleration = Vector2.ZERO
 	
 func end_destroy_ground():
 	$Head.set_deferred("disabled", false)
 	$Body.set_deferred("disabled", false)
 	$Sprite/AxeHitbox/CollisionShape2D.set_deferred("disabled", false)
 	$"../Ground".explode()
+	acceleration = Globals.GRAVITY
+	player.state = player.states.fall_from_ground
+	player.enable_movement = false
+	player.anim.play("FallDown")
+	state = states.fall_from_ground
+	anim.play("Fall")
+
+
+func on_screen_exited():
+	if state == states.fall_from_ground:
+		get_parent().on_odin_exited()

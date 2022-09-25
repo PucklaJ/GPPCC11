@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://textures/player_sheet.png" type="Texture" id=1]
 [ext_resource path="res://objects/Bar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Player.gd" type="Script" id=3]
+[ext_resource path="res://src/OdinVisibility.gd" type="Script" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 height = 5.0
@@ -269,7 +270,7 @@ shape = SubResource( 1 )
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 0, 0, 20, 25 )
+region_rect = Rect2( 80, 0, 20, 25 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 autoplay = "Stand"
@@ -316,3 +317,8 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( 10, 13 )
 shape = SubResource( 17 )
+
+[node name="Visibility" type="VisibilityNotifier2D" parent="."]
+script = ExtResource( 4 )
+
+[connection signal="screen_exited" from="Visibility" to="." method="on_screen_exited"]

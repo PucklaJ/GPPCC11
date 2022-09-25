@@ -18,15 +18,13 @@ func _ready():
 func _process(_dt: float):
 	if player_exited and odin_exited:
 		# Transitation to FallScene
-		var cam = $Cam
 		remove_child(player)
 		remove_child(odin)
-		remove_child(cam)
 		
 		var fall_scene : Node2D = FallScene.instance()
 		fall_scene.add_child(player)
 		fall_scene.add_child(odin)
-		fall_scene.add_child(cam)
+		fall_scene.get_node("Tree").scroll_active = true
 		
 		player.position.y = -100
 		player.state = player.states.fall_intro

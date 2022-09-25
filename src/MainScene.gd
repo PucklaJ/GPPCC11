@@ -7,6 +7,7 @@ onready var pickup_scene = preload("res://objects/PickUp.tscn")
 
 func _ready():
 	odin.player = player
+	odin.position = Vector2(220, 85)
 	pickup_timer.connect("timeout",self,"on_pickup_timer_timeout")
 
 func on_pickup_timer_timeout():

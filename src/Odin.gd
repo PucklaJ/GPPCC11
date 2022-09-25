@@ -59,6 +59,20 @@ var speer_thrown = 0
 func _ready():
 	health = health_bar.MAX_VALUE
 	axe_hitbox.connect("body_entered",self,"on_axe_entered")
+	
+func _input(e: InputEvent):
+	if e is InputEventKey:
+		if e.is_pressed() and e.scancode == KEY_E:
+			state = states.destroy_ground
+			velocity = Vector2.ZERO
+			anim.play("DestroyGround")
+			
+func _physics_process(delta):
+	if state != states.destroy_ground:
+		ground_movement(delta)
+
+func _process(delta):
+	handle_states(delta)
 
 func ground_movement(delta):
 	velocity += Globals.GRAVITY * delta
@@ -67,7 +81,8 @@ func ground_movement(delta):
 var time_val = 0.0
 
 func handle_states(delta):
-	sprite.position = Vector2(0,0)
+	if state != states.destroy_ground:
+		sprite.position = Vector2(0,0)
 	axe_hitbox.position = Vector2(0,0)
 	speer_start.position = Vector2(15,34)
 	match state:
@@ -202,12 +217,6 @@ func handle_states(delta):
 				time_val = 0.0
 				state = states.wait_for_second_speer
 
-func _physics_process(delta):
-	ground_movement(delta)
-
-func _process(delta):
-	handle_states(delta)
-
 func knockback():
 	state = states.knockback
 	velocity.x = 0.0
@@ -246,3 +255,14 @@ func throw_speer():
 	speer.position = speer_start.global_position
 	speer.direction = (player.get_position() - speer_start.global_position).normalized()
 	get_tree().get_root().add_child(speer)
+	
+func init_destroy_ground():
+	$Sprite/AxeHitbox/CollisionShape2D.set_deferred("disabled", true)
+	$Head.set_deferred("disabled", true)
+	$Body.set_deferred("disabled", true)
+	
+func end_destroy_ground():
+	$Head.set_deferred("disabled", false)
+	$Body.set_deferred("disabled", false)
+	$Sprite/AxeHitbox/CollisionShape2D.set_deferred("disabled", false)
+	$"../Ground".explode()

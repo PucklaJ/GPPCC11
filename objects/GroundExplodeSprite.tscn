@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/GroundExplodeSprite.gd" type="Script" id=1]
+
+[node name="GroundExplodeSprite" type="Sprite"]
+script = ExtResource( 1 )
+rotation_speed = 50.0
+move_speed = 200.0
+
+[node name="visibility" type="VisibilityNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="visibility" to="." method="on_screen_exited"]

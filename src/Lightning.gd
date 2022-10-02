@@ -20,9 +20,9 @@ func _process(dt: float):
 
 func on_hitbox_entered(body: Node):
 	if body.can_be_damaged():
-		queue_free()
 		body.knockback(position)
 		if $AnimationPlayer.current_animation == "Small":
 			body.damage(small_lightning_damage)
+			queue_free()
 		else:
 			body.damage(big_lightning_damage)

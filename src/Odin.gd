@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 const speer_scene : PackedScene = preload("res://objects/Speer.tscn")
 const lightning_scene : PackedScene = preload("res://objects/Lightning.tscn")
+const end_message_scene: PackedScene = preload("res://objects/EndMessage.tscn")
 
 enum states{
 	walk,
@@ -26,7 +27,8 @@ enum states{
 	wait_for_lightning_throw,
 	wait_after_lightning_throw,
 	fall_from_ground,
-	none
+	none,
+	dead
 }
 
 export var GROUND_VELOCITY = 50
@@ -266,6 +268,8 @@ func handle_states(delta):
 			if time_val > SPEER_THROW_TIME:
 				time_val = 0.0
 				state = states.wait_for_second_speer
+		states.dead:
+			anim.play("Knockback")
 
 func knockback():
 	state = states.knockback
@@ -279,6 +283,8 @@ func knockback():
 func damage(amount):
 	health = max(health-amount,0.0)
 	health_bar.set_value(health)
+	if health == 0.0 and state != states.dead:
+		state = states.dead
 
 func knockback_explosion():
 	if player.get_position().distance_squared_to(get_position()) < KNOCKBACK_EXPLOSION_RADIUS*KNOCKBACK_EXPLOSION_RADIUS:

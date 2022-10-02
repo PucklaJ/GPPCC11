@@ -29,6 +29,7 @@ enum states {
 	fall_intro,
 	fall_from_ground,
 	none,
+	dead,
 }
 
 onready var arrow_scene = preload("res://objects/Arrow.tscn")
@@ -105,6 +106,9 @@ var time_val = 0.0
 var sword_direction = 1.0
 
 func handle_states(delta: float):
+	if health == 0.0:
+		state = states.dead
+	
 	sprite.position = Vector2(0,0)
 	sword_hitbox.position = Vector2(0,0)
 	arrow_start.position = Vector2(11,17)
@@ -201,10 +205,17 @@ func handle_states(delta: float):
 					state = states.move
 				time_val = 0.0
 				enable_movement = true
+		states.dead:
+			if Globals.state == Globals.states.boss_ground:
+				anim.play("KnockbackGround")
+			else:
+				anim.play("KnockbackFall")
 	
 func damage(amount):
 	health = clamp(health-amount,0.0,health_bar.MAX_VALUE)
 	health_bar.set_value(health)
+	if health == 0.0:
+		state = states.dead
 	
 func knockback(pos,multiplier=1.0):
 	if state != states.knockback:
@@ -230,7 +241,7 @@ func on_sword_hitbox_entered(body):
 
 func can_be_damaged():
 	match state:
-		states.knockback: return false
+		states.knockback, states.dead: return false
 	return true
 
 func shoot_arrow():

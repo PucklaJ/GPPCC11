@@ -1,6 +1,7 @@
 extends Node2D
 
 const FallScene : PackedScene = preload("res://scenes/FallScene.tscn")
+const EndMessage: PackedScene = preload("res://objects/EndMessage.tscn")
 
 onready var odin = get_node("Odin")
 onready var player = get_node("Player")
@@ -9,6 +10,7 @@ onready var pickup_scene = preload("res://objects/PickUp.tscn")
 
 var odin_exited = false
 var player_exited = false
+var game_is_over = false
 
 func _ready():
 	odin.player = player
@@ -36,6 +38,15 @@ func _process(_dt: float):
 		
 		queue_free()
 		get_parent().add_child(fall_scene)
+	if odin.state == odin.states.dead and not game_is_over:
+		game_is_over = true
+		var end_message = EndMessage.instance()
+		add_child(end_message)
+	elif player.state == player.states.dead and not game_is_over:
+		game_is_over = true
+		var end_message = EndMessage.instance()
+		end_message.set_game_over()
+		add_child(end_message)
 
 func on_pickup_timer_timeout():
 	add_child(pickup_scene.instance())

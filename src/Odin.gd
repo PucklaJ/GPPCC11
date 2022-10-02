@@ -76,7 +76,7 @@ func _input(e: InputEvent):
 			anim.play("DestroyGround")
 			
 func _physics_process(delta):
-	if state != states.destroy_ground:
+	if Globals.state == Globals.states.boss_ground and state != states.destroy_ground:
 		ground_movement(delta)
 
 func _process(delta):
@@ -128,12 +128,15 @@ func handle_states(delta):
 				state = states.wait_for_second_speer
 			time_val += delta
 		states.fall_intro:
+			velocity += acceleration * delta
+			position.y += velocity.y * delta
 			if position.y >= FALL_POS_Y:
 				acceleration = Vector2.ZERO
 				position.y = FALL_POS_Y
 				state = states.fall
 				time_val = 0.0
 		states.fall:
+			position.y += velocity.y * delta
 			anim.play("Fall")
 			if velocity.y == 0.0:
 				velocity.y = FALL_VELOCITY

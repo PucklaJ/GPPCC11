@@ -369,13 +369,13 @@ height = 4.0
 [node name="Odin" type="KinematicBody2D"]
 position = Vector2( 0, -100 )
 collision_layer = 2
-collision_mask = 4
 script = ExtResource( 26 )
 __meta__ = {
 "_edit_horizontal_guides_": [  ]
 }
 WAIT_FOR_WALK_TIME = 1.0
 FALL_POS_Y = 40.0
+LIGHTNING_PROBABILITY = 0.25
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 18 )

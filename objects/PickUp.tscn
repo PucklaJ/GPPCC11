@@ -9,19 +9,24 @@ radius = 6.5
 
 [node name="PickUp" type="Node2D"]
 script = ExtResource( 3 )
+PICK_UP_FALL_VELOCITY = 50.0
 
 [node name="Arrow" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-centered = false
 
 [node name="Health" type="Sprite" parent="."]
 texture = ExtResource( 2 )
-centered = false
 
 [node name="Hitbox" type="Area2D" parent="."]
-monitorable = false
 collision_layer = 8
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2( 6.5, 6.5 )
 shape = SubResource( 1 )
+
+[node name="Visiblity" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -7, -7 )
+scale = Vector2( 0.7, 0.7 )
+rect = Rect2( 0, 0, 20, 20 )
+
+[connection signal="screen_exited" from="Visiblity" to="." method="on_screen_exited"]

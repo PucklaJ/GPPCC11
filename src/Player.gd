@@ -198,7 +198,7 @@ func handle_states(delta: float):
 					state = states.move
 				else:
 					anim.play("FallDown")
-					state = states.move_fall
+					state = states.move
 				time_val = 0.0
 				enable_movement = true
 	

@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://objects/Tree.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Cam.gd" type="Script" id=2]
+[ext_resource path="res://src/FallScene.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 160.5, 2.5 )
@@ -16,6 +17,7 @@ extents = Vector2( 2, 90.5 )
 extents = Vector2( 2, 92.125 )
 
 [node name="FallScene" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="Cam" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -42,3 +44,9 @@ shape = SubResource( 3 )
 [node name="Left2" type="CollisionShape2D" parent="Border"]
 position = Vector2( 324, 89.125 )
 shape = SubResource( 4 )
+
+[node name="PickUpTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="PickUpTimer" to="." method="on_pickup_timer"]
